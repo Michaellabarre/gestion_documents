@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Nouveau document</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.file) }}
+        {{ form_row(form.isPublic) }}
+        {{ form_row(form.allowedUsers, {id: 'allowedUsers'}) }}
+        <p id="info-allowedUsers" class="ui info message">
+            Si la case "public" est coché, le document sera visible par tous.<br />
+            Sinon, soit un ou plusieurs utlisateurs ont été sélectionnés, et ceux-ci ont donc accès à ce document, soit aucun et le document n'est alors visible que par l'utilisateur courant.
+        </p>
+        <button class="ui primary button">Sauvegarder</button>
+        <a class="ui primary button" href="{{ path('document_index') }}">Retour à la liste</a>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+<script>
+$('#document_isPublic').change(function() {
+    if (this.checked) {
+        $('#allowedUsers').parent().hide();
+        $('#info-allowedUsers').hide();
+    } else {
+        $('#allowedUsers').parent().show();
+        $('#info-allowedUsers').show();
+    }
+});
+</script>
+{% endblock %}

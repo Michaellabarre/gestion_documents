@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Liste des documents</h1>
+
+<table class="ui celled table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Auteur</th>
+            <th>Date de création</th>
+            <th>Public ?</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td>{{ document['id'] }}</td>
+            <td><a href="{{ path('document_download', {'id': document['id']}) }}">{{ document.name }}</a></td>
+            <td>{{ document['username'] }}</td>
+            <td>{{ document['creation_date']|date('d/m/Y H:i:s') }}</td>
+            <td>{{ document['is_public'] ? '<i class="icon check green"></i>' : '<i class="icon close red"></i>' }}</td>
+            <td>
+                {% if app.user.id == document['user_id'] %}
+                <a href="{{ path('document_edit', {'id': document['id']}) }}"><i class="icon edit large"></i></a>
+                <a href="{{ path('document_delete', {'id': document['id']}) }}"><i class="icon trash large"></i></a>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Pas de document trouvé</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('document_new') }}" class="ui button primary">Ajouter document</a>
+{% endblock %}

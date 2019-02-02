@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    web:
+        container_name: web
+        build:
+            context: php
+        ports:
+            - 8080:80
+        volumes:
+            - .:/var/www/html
+            - ./php/000-default.conf:/etc/apache2/sites-available/000-default.conf
+        restart: always
+    mariadb:
+        container_name: db
+        image: mariadb:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=app
+            - MYSQL_USER=test
+            - MYSQL_PASSWORD=test
+        ports:
+            - 3307:3306
+        links:
+            - web
+        depends_on:
+            - web
+        restart: always
