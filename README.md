@@ -15,3 +15,12 @@ docker exec -it -u www-data web php bin/console doctrine:fixtures:load --no-inte
 - Nom : user3/ Mot de passe : user3
 - Nom : user4/ Mot de passe : user4
 - Nom : user5/ Mot de passe : user5
+
+## Fonctionnalités :
+- Inscription
+- Connexion
+- Déconnexion
+- Upload de document
+- Modification de document
+- Suppression de document
+- Gestion des droits sur les documents
