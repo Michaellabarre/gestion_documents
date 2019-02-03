@@ -28,7 +28,7 @@ class Document
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank()
-     * @Assert\File(maxSize="60000"), mimeTypes={"application/pdf", "image/jpeg", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/zip"})
+     * @Assert\File(maxSize="3000000"), mimeTypes={"application/pdf", "image/jpeg", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/zip"})
      */
     private $file;
 
