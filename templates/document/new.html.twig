@@ -17,15 +17,5 @@
 {% endblock %}
 
 {% block javascript %}
-<script>
-$('#document_isPublic').change(function() {
-    if (this.checked) {
-        $('#allowedUsers').parent().hide();
-        $('#info-allowedUsers').hide();
-    } else {
-        $('#allowedUsers').parent().show();
-        $('#info-allowedUsers').show();
-    }
-});
-</script>
+<script src="{{ asset('assets/js/document.js') }}"></script>
 {% endblock %}
