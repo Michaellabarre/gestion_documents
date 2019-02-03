@@ -11,7 +11,7 @@
             Si la case "public" est coché, le document sera visible par tous.<br />
             Sinon, soit un ou plusieurs utlisateurs ont été sélectionnés, et ceux-ci ont donc accès à ce document, soit aucun et le document n'est alors visible que par l'utilisateur courant.
         </p>
-        <button class="ui primary button">Sauvegarder</button>
+        <button type="submit" class="ui primary button">Sauvegarder</button>
         <a class="ui primary button" href="{{ path('document_index') }}">Retour à la liste</a>
     {{ form_end(form) }}
 {% endblock %}

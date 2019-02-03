@@ -45,4 +45,27 @@ class DocumentRepository extends ServiceEntityRepository
 
         return $stmt->fetchAll();
     }
+
+    public function userCanViewDocument(\App\Entity\User $user, \App\Entity\Document $document)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT d.id
+            FROM document d
+            JOIN fos_user u ON u.id=d.user_id
+            WHERE d.id=:document_id
+            AND (d.user_id=:user_id
+            OR d.is_public=:is_public
+            OR d.id IN(SELECT document_id FROM document_user WHERE user_id=:user_id AND document_id=:document_id))';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'user_id'     => $user->getId(),
+            'is_public'   => 1,
+            'document_id' => $document->getId()
+        ]);
+
+        return $stmt->rowCount() > 0;
+    }
 }

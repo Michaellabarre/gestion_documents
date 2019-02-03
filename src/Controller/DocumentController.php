@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/document")
@@ -114,10 +115,18 @@ class DocumentController extends AbstractController
     }
 
     /**
-     * @Route("/download/{id}", name="document_download", methods={"GET","DELETE"})
+     * @Route("/download/{id}", name="document_download", methods={"GET"})
      */
     public function download(Request $request, Document $document) : Response
     {
+        $check = $this->getDoctrine()
+        ->getRepository(Document::class)
+        ->userCanViewDocument($this->getUser(), $document);
+
+        if (!$check) {
+            throw new AccessDeniedException();
+        }
+
         return $this->file($document->getFile(), $document->getName());
     }
 }
